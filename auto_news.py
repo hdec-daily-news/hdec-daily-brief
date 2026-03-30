@@ -1,5 +1,5 @@
 """
-현대건설 Daily Brief 자동 생성기
+HDEC DAILY NEWS 자동 생성기
 매일 오후 1시 자동 실행 → 뉴스 수집 → 필터링 → TOP 10 선정 → HTML 생성
 """
 
@@ -284,12 +284,6 @@ def generate_html(articles):
         else:
             sections["수주 경쟁 & 전략"].append(art)
 
-    def rank_class(r):
-        if r == 1: return "rank-1"
-        if r == 2: return "rank-2"
-        if r == 3: return "rank-3"
-        return "rank-default"
-
     def priority_class(art):
         text = art["title"] + " " + art.get("description", "")
         if any(w in text for w in ["비상", "긴급", "전쟁", "봉쇄", "폭등", "원전", "EPC", "해상풍력"]):
@@ -335,12 +329,10 @@ def generate_html(articles):
         cards_html += f'<div class="section-divider">{sec}</div>\n'
         for art in arts:
             tags_html = make_tags_html(art["_tags"])
-            r = art["_rank"]
             cards_html += f"""
         <article class="card">
             <div class="priority-bar {priority_class(art)}"></div>
             <div class="card-inner">
-                <div class="rank {rank_class(r)}">{r}</div>
                 <div class="card-body">
                     <div class="card-tags">{tags_html}</div>
                     <h2 class="card-title">
@@ -364,7 +356,7 @@ def generate_html(articles):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현대건설 Daily Brief - {today}</title>
+    <title>HDEC DAILY NEWS - {today}</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -384,11 +376,6 @@ def generate_html(articles):
         .card {{ background: #141414; border: 1px solid #222; border-radius: 16px; margin-bottom: 16px; overflow: hidden; transition: all 0.3s ease; position: relative; }}
         .card:hover {{ border-color: #444; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }}
         .card-inner {{ display: flex; gap: 20px; padding: 24px; align-items: flex-start; }}
-        .rank {{ width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; color: #fff; }}
-        .rank-1 {{ background: linear-gradient(135deg, #e2b714, #f0d000); color: #1a1a2e; }}
-        .rank-2 {{ background: linear-gradient(135deg, #c0c0c0, #e0e0e0); color: #1a1a2e; }}
-        .rank-3 {{ background: linear-gradient(135deg, #cd7f32, #e8a050); color: #1a1a2e; }}
-        .rank-default {{ background: #222; }}
         .card-body {{ flex: 1; min-width: 0; }}
         .card-tags {{ display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }}
         .tag {{ font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; letter-spacing: 0.3px; }}
@@ -413,7 +400,7 @@ def generate_html(articles):
         .section-divider {{ display: flex; align-items: center; gap: 12px; margin: 32px 0 20px; font-size: 13px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; }}
         .section-divider::after {{ content: ''; flex: 1; height: 1px; background: #222; }}
         .footer {{ text-align: center; padding: 32px 24px; border-top: 1px solid #1a1a1a; font-size: 12px; color: #444; }}
-        @media (max-width: 640px) {{ .header h1 {{ font-size: 22px; }} .card-inner {{ padding: 18px; gap: 14px; }} .card-title {{ font-size: 15px; }} .rank {{ width: 36px; height: 36px; font-size: 15px; }} .header-meta {{ flex-direction: column; gap: 8px; }} }}
+        @media (max-width: 640px) {{ .header h1 {{ font-size: 22px; }} .card-inner {{ padding: 18px; gap: 14px; }} .card-title {{ font-size: 15px; }} .header-meta {{ flex-direction: column; gap: 8px; }} }}
     </style>
 </head>
 <body>
@@ -421,7 +408,7 @@ def generate_html(articles):
         <div class="header-content">
             <div class="header-top">
                 <div class="logo">HC</div>
-                <h1>현대건설 Daily Brief</h1>
+                <h1>HDEC DAILY NEWS</h1>
             </div>
             <div class="header-meta">
                 <span>{today}</span>
@@ -441,7 +428,7 @@ def generate_html(articles):
         {cards_html}
     </main>
     <footer class="footer">
-        <p>현대건설 AI 뉴스 큐레이션 · 네이버 뉴스 API 기반 · {today_short} 자동 생성</p>
+        <p>HDEC AI 뉴스 큐레이션 · 네이버 뉴스 API 기반 · {today_short} 자동 생성</p>
     </footer>
 </body>
 </html>"""
@@ -454,7 +441,7 @@ def generate_html(articles):
 # ──────────────────────────────────────
 def main():
     print(f"\n{'='*50}")
-    print(f"  현대건설 Daily Brief 자동 생성")
+    print(f"  HDEC DAILY NEWS 자동 생성")
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print(f"{'='*50}\n")
 
